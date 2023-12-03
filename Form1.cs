@@ -52,6 +52,7 @@ namespace Tienda
                 categorias.Add(dataReader.GetString(1));
                 CrearRadioButtons(dataReader.GetInt32(0), dataReader.GetString(1));
             }
+            Lblcategorias.Text += " (" + categorias.Count + ")";
             dataReader.Close();
 
         }
@@ -109,16 +110,13 @@ namespace Tienda
         /// <param name="categoria">Nombre de la categoría. Valor de Text</param>
         private void CrearRadioButtons(int id, string categoria)
         {
-            for (int i = 0; i < categorias.Count; i++)
-            {
-                RadioButton rb = new RadioButton();
-                rb.Text = categoria;
-                rb.Top = ((rb.Height + 3) * i);
-                rb.Tag = id;                
-                rb.CheckedChanged += new EventHandler(MostrarDatos);
-                PanelRb.Controls.Add(rb);
-            }
-            
+        
+            RadioButton rb = new RadioButton();
+            rb.Text = categoria;
+            rb.Top = ((rb.Height + 3) * (id - 1));
+            rb.Tag = id;                
+            rb.CheckedChanged += new EventHandler(MostrarDatos);
+            PanelRb.Controls.Add(rb);
         }
 
         /// <summary>

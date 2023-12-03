@@ -57,38 +57,46 @@ namespace Tienda
             // 
             // LBProductId
             // 
+            this.LBProductId.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBProductId.FormattingEnabled = true;
+            this.LBProductId.ItemHeight = 14;
             this.LBProductId.Location = new System.Drawing.Point(157, 38);
             this.LBProductId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LBProductId.Name = "LBProductId";
-            this.LBProductId.Size = new System.Drawing.Size(85, 225);
+            this.LBProductId.Size = new System.Drawing.Size(85, 214);
             this.LBProductId.TabIndex = 0;
             // 
             // LBProductName
             // 
+            this.LBProductName.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBProductName.FormattingEnabled = true;
+            this.LBProductName.ItemHeight = 14;
             this.LBProductName.Location = new System.Drawing.Point(250, 38);
             this.LBProductName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LBProductName.Name = "LBProductName";
-            this.LBProductName.Size = new System.Drawing.Size(203, 225);
+            this.LBProductName.Size = new System.Drawing.Size(203, 214);
             this.LBProductName.TabIndex = 1;
             // 
             // LBUnitPrice
             // 
+            this.LBUnitPrice.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBUnitPrice.FormattingEnabled = true;
+            this.LBUnitPrice.ItemHeight = 14;
             this.LBUnitPrice.Location = new System.Drawing.Point(461, 38);
             this.LBUnitPrice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LBUnitPrice.Name = "LBUnitPrice";
-            this.LBUnitPrice.Size = new System.Drawing.Size(98, 225);
+            this.LBUnitPrice.Size = new System.Drawing.Size(98, 214);
             this.LBUnitPrice.TabIndex = 2;
             // 
             // LBUnitStock
             // 
+            this.LBUnitStock.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBUnitStock.FormattingEnabled = true;
+            this.LBUnitStock.ItemHeight = 14;
             this.LBUnitStock.Location = new System.Drawing.Point(567, 38);
             this.LBUnitStock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LBUnitStock.Name = "LBUnitStock";
-            this.LBUnitStock.Size = new System.Drawing.Size(45, 225);
+            this.LBUnitStock.Size = new System.Drawing.Size(45, 214);
             this.LBUnitStock.TabIndex = 3;
             // 
             // LblProductId
@@ -233,10 +241,11 @@ namespace Tienda
             // 
             // PanelRb
             // 
+            this.PanelRb.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PanelRb.Location = new System.Drawing.Point(18, 38);
             this.PanelRb.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.PanelRb.Name = "PanelRb";
-            this.PanelRb.Size = new System.Drawing.Size(131, 225);
+            this.PanelRb.Size = new System.Drawing.Size(131, 240);
             this.PanelRb.TabIndex = 17;
             // 
             // Lblcategorias
