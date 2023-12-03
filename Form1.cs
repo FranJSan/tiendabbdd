@@ -29,6 +29,22 @@ namespace Tienda
             LBProductName.Click += new EventHandler(LB_Click);
             LBUnitPrice.Click += new EventHandler(LB_Click);
             LBUnitStock.Click += new EventHandler(LB_Click);
+
+            LBProductId.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);  
+            LBProductName.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
+            LBUnitPrice.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
+            LBUnitStock.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
+
+
+        }
+
+        private void LB_DoubleClick(object sender, MouseEventArgs e)
+        {
+            LB_Click(sender, e);
+            TBProcuctId.Text = LBProductId.SelectedItem.ToString();
+            TBProductName.Text = LBProductName.SelectedItem.ToString();
+            TBUnitPrice.Text = LBUnitPrice.SelectedItem.ToString();
+            TBUnitStock.Text = LBUnitStock.SelectedItem.ToString();
         }
 
         private void LB_Click (object sender, EventArgs e)
@@ -215,7 +231,7 @@ namespace Tienda
                 {
                     if (tb.Tag.ToString().Equals("ProductName"))
                     {
-                        sentencia += ", " + tb.Tag.ToString() + "='" + tb.Text.ToString() + "'";
+                        sentencia += ", " + tb.Tag.ToString() + "=\"" + tb.Text.ToString() + "\"";
                         total++;
                     }
                     else
