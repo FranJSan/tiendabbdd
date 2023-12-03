@@ -238,6 +238,13 @@ namespace Tienda
                 }
             }
 
+            // Compruebo que haya datos para actualizar.
+            if (total == 0)
+            {
+                MessageBox.Show("Tiene introducir algún dato para actualizar el producto.");
+                return null;
+            }
+
             sentencia += " where ProductID=" + TBProcuctId.Text.ToString();
 
             return sentencia;
