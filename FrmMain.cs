@@ -12,8 +12,13 @@ using System.Text.RegularExpressions;
 
 /// <summary>
 /// Tarea 2.1 -> ACCESO EN MODO CONECTADO
+/// El programa se conecta a la base de datos nwind y lanza una consulta a la tabla Products para
+/// usar sus datos. Por un lado un RadioButton por categoria de de Products, asociandole un evento
+/// para mostrar todos los productos de esa categoría a las ListBox.
+/// Haciendo click sobre cualquier item de las ListBox se seleccionará el resto de información de ese producto.
+/// Haciendo doble cliclk, se pasarán los datos de ese producto a los TextBox para actualizar.
 /// 
-/// Borrar lista categorias? -> revisar su uso, pero no es necesaria.
+/// La parte de actualización de datos comprueba la validez de los datos antes de lanzar el update a la base de datos.
 /// </summary>
 namespace Tienda
 {
@@ -21,11 +26,11 @@ namespace Tienda
     {
         private OleDbConnection connection;
         private IDbCommand command;
-
-        private List<string> categorias = new List<string>();
+       
         public FrmMain()
         {
             InitializeComponent();
+
             LBProductId.Click += new EventHandler(LB_Click);
             LBProductName.Click += new EventHandler(LB_Click);
             LBUnitPrice.Click += new EventHandler(LB_Click);
@@ -35,36 +40,6 @@ namespace Tienda
             LBProductName.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
             LBUnitPrice.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
             LBUnitStock.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
-        }
-
-        /// <summary>
-        /// Controlador del evento doble click sobre los items de las ListBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <remarks>Vuelca los datos de la selección en los TextBox de actualización</remarks>
-        private void LB_DoubleClick(object sender, MouseEventArgs e)
-        {
-            LB_Click(sender, e);
-            TBProcuctId.Text = LBProductId.SelectedItem.ToString();
-            TBProductName.Text = LBProductName.SelectedItem.ToString();
-            TBUnitPrice.Text = LBUnitPrice.SelectedItem.ToString();
-            TBUnitStock.Text = LBUnitStock.SelectedItem.ToString();
-        }
-
-        /// <summary>
-        /// Controlador del evento Click sobre los items de las ListBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <remarks>Selecciona en todas las ListBox los datos del item seleccionado</remarks>
-        private void LB_Click (object sender, EventArgs e)
-        {
-            ListBox lb = (ListBox)sender;
-            LBProductId.SelectedIndex = lb.SelectedIndex;
-            LBProductName.SelectedIndex = lb.SelectedIndex;
-            LBUnitPrice.SelectedIndex = lb.SelectedIndex;
-            LBUnitStock.SelectedIndex = lb.SelectedIndex;
         }
 
         /// <summary>
@@ -105,17 +80,16 @@ namespace Tienda
             IDataReader dataReader;
             dataReader = command.ExecuteReader();
 
+            int total = 0;
             while (dataReader.Read())
-            {               
-                categorias.Add(dataReader.GetString(1));
+            {
                 CrearRadioButton(dataReader.GetInt32(0), dataReader.GetString(1));
+                total++;
             }
-            Lblcategorias.Text += " (" + categorias.Count + ")";
+            Lblcategorias.Text += " (" + total + ")";
             dataReader.Close();
 
         }
-
-        
 
         /// <summary>
         /// Controlador de los RadioButtons. 
@@ -132,7 +106,6 @@ namespace Tienda
             LBUnitPrice.Items.Clear();
             LBUnitStock.Items.Clear();
 
-
             RadioButton rb = sender as RadioButton;
 
             command = connection.CreateCommand();
@@ -148,6 +121,7 @@ namespace Tienda
                LBUnitPrice.Items.Add(dataReader.GetDecimal(5));
                LBUnitStock.Items.Add(dataReader.GetInt16(6));               
             }
+
             dataReader.Close();
         }
 
@@ -167,6 +141,36 @@ namespace Tienda
         }
 
         /// <summary>
+        /// Controlador del evento doble click sobre los items de las ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <remarks>Vuelca los datos de la selección en los TextBox de actualización</remarks>
+        private void LB_DoubleClick(object sender, MouseEventArgs e)
+        {
+            LB_Click(sender, e);
+            TBProcuctId.Text = LBProductId.SelectedItem.ToString();
+            TBProductName.Text = LBProductName.SelectedItem.ToString();
+            TBUnitPrice.Text = LBUnitPrice.SelectedItem.ToString();
+            TBUnitStock.Text = LBUnitStock.SelectedItem.ToString();
+        }
+
+        /// <summary>
+        /// Controlador del evento Click sobre los items de las ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <remarks>Selecciona en todas las ListBox los datos del item seleccionado</remarks>
+        private void LB_Click(object sender, EventArgs e)
+        {
+            ListBox lb = (ListBox)sender;
+            LBProductId.SelectedIndex = lb.SelectedIndex;
+            LBProductName.SelectedIndex = lb.SelectedIndex;
+            LBUnitPrice.SelectedIndex = lb.SelectedIndex;
+            LBUnitStock.SelectedIndex = lb.SelectedIndex;
+        }
+
+        /// <summary>
         /// Controlador del evento click sobre el boton "Actualizar".
         /// </summary>
         /// <param name="sender"></param>
@@ -177,7 +181,7 @@ namespace Tienda
         /// </remarks>
         private void BtnActualizar_Click(object sender, EventArgs e)
         {
-            string sentencia = PrepararSentencia();
+            string sentencia = PrepararSentenciaUpdate();
             if (sentencia == null)
             {
                 // Todos los errores ya están controlados.
@@ -187,7 +191,7 @@ namespace Tienda
             {
                 command.CommandText = sentencia;
                 command.ExecuteNonQuery();
-                MessageBox.Show("Se ha actualizado el registro");
+                MessageBox.Show("Se ha actualizado el registro.");
             }
             catch (Exception ex)
             {
@@ -200,7 +204,7 @@ namespace Tienda
         /// </summary>
         /// <returns>Un string con la sentencia preparada</returns>
         /// <remarks>No tiene en cuenta los TextBox en blanco ni actualiza el Id del producto.</remarks>
-        private string PrepararSentencia()
+        private string PrepararSentenciaUpdate()
         {
             if (!ComprobarTextBoxs()) return null;
             string sentencia = "update Products set ";
@@ -300,7 +304,6 @@ namespace Tienda
             }
         }
 
-
         /// <summary>
         /// Método para borrar los datos y la selección de los TextBoxs
         /// </summary>
@@ -312,8 +315,6 @@ namespace Tienda
             TBProductName.Text = "";
             TBUnitPrice.Text = "";
             TBUnitStock.Text = "";
-        }
-
-       
+        }       
     }
 }
