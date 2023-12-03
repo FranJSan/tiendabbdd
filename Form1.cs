@@ -25,6 +25,35 @@ namespace Tienda
         public FrmMain()
         {
             InitializeComponent();
+            LBProductId.Click += new EventHandler(LB_Click);
+            LBProductName.Click += new EventHandler(LB_Click);
+            LBUnitPrice.Click += new EventHandler(LB_Click);
+            LBUnitStock.Click += new EventHandler(LB_Click);
+        }
+
+        private void LB_Click (object sender, EventArgs e)
+        {
+            ListBox lb = (ListBox)sender;
+            LBProductId.SelectedIndex = lb.SelectedIndex;
+            LBProductName.SelectedIndex = lb.SelectedIndex;
+            LBUnitPrice.SelectedIndex = lb.SelectedIndex;
+            LBUnitStock.SelectedIndex = lb.SelectedIndex;
+        }
+
+
+        private void HoverMouseEnter (object sender, EventArgs e)
+        {
+            
+            ListBox lb = (ListBox)sender;
+            Control item = (Control)lb.SelectedItem;
+            item.BackColor = Color.LightBlue;
+            
+        }
+
+        private void HoverMouseLeave(object sender, EventArgs e)
+        {
+            ListBox lb = (ListBox)sender;
+            lb.BackColor = Color.White;
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
