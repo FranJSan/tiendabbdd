@@ -1,0 +1,10 @@
+C:\Users\fran_\source\repos\Tienda\bin\Debug\Tienda.exe.config
+C:\Users\fran_\source\repos\Tienda\bin\Debug\Tienda.exe
+C:\Users\fran_\source\repos\Tienda\bin\Debug\Tienda.pdb
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.csproj.AssemblyReference.cache
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.FrmMain.resources
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.Properties.Resources.resources
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.csproj.GenerateResource.cache
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.csproj.CoreCompileInputs.cache
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.exe
+C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.pdb
