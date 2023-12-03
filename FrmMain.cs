@@ -11,6 +11,7 @@ using System.Data.OleDb;
 using System.Text.RegularExpressions;
 
 /// <summary>
+/// Tarea 2.1 -> ACCESO EN MODO CONECTADO
 /// 
 /// Borrar lista categorias? -> revisar su uso, pero no es necesaria.
 /// </summary>
@@ -34,10 +35,14 @@ namespace Tienda
             LBProductName.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
             LBUnitPrice.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
             LBUnitStock.MouseDoubleClick += new MouseEventHandler(LB_DoubleClick);
-
-
         }
 
+        /// <summary>
+        /// Controlador del evento doble click sobre los items de las ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <remarks>Vuelca los datos de la selección en los TextBox de actualización</remarks>
         private void LB_DoubleClick(object sender, MouseEventArgs e)
         {
             LB_Click(sender, e);
@@ -47,6 +52,12 @@ namespace Tienda
             TBUnitStock.Text = LBUnitStock.SelectedItem.ToString();
         }
 
+        /// <summary>
+        /// Controlador del evento Click sobre los items de las ListBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <remarks>Selecciona en todas las ListBox los datos del item seleccionado</remarks>
         private void LB_Click (object sender, EventArgs e)
         {
             ListBox lb = (ListBox)sender;
@@ -56,54 +67,15 @@ namespace Tienda
             LBUnitStock.SelectedIndex = lb.SelectedIndex;
         }
 
-
-        private void HoverMouseEnter (object sender, EventArgs e)
-        {
-            
-            ListBox lb = (ListBox)sender;
-            Control item = (Control)lb.SelectedItem;
-            item.BackColor = Color.LightBlue;
-            
-        }
-
-        private void HoverMouseLeave(object sender, EventArgs e)
-        {
-            ListBox lb = (ListBox)sender;
-            lb.BackColor = Color.White;
-        }
-
+        /// <summary>
+        /// Controlador load de FrmMain
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrmMain_Load(object sender, EventArgs e)
         {
             EstablecerConexion();
-            ConsultarCategorias();
-
-        }
-
-
-        /// <summary>
-        /// Consulta en la base de datos los datos de las categorias.
-        /// </summary>
-        /// <remarks>
-        /// Se consulta el Id y en nombre, que serán usados para la creación de 
-        /// los RabioButtons
-        /// </remarks>
-        private void ConsultarCategorias()
-        {
-            command = connection.CreateCommand();
-            // consulta para las categorias
-            command.CommandText = "select CategoryId, CategoryName from categories";
-
-            IDataReader dataReader;
-            dataReader = command.ExecuteReader();
-
-            while (dataReader.Read())
-            {               
-                categorias.Add(dataReader.GetString(1));
-                CrearRadioButtons(dataReader.GetInt32(0), dataReader.GetString(1));
-            }
-            Lblcategorias.Text += " (" + categorias.Count + ")";
-            dataReader.Close();
-
+            ConsultarYCrearCategorias();
         }
 
         /// <summary>
@@ -118,7 +90,35 @@ namespace Tienda
         }
 
         /// <summary>
-        /// Controlador de los RaafioButtons. 
+        /// Consulta en la base de datos los datos de las categorias.
+        /// </summary>
+        /// <remarks>
+        /// Se consulta el Id y en nombre, que serán usados para la creación de 
+        /// los RabioButtons
+        /// </remarks>
+        private void ConsultarYCrearCategorias()
+        {
+            command = connection.CreateCommand();
+            // consulta para las categorias
+            command.CommandText = "select CategoryId, CategoryName from categories";
+
+            IDataReader dataReader;
+            dataReader = command.ExecuteReader();
+
+            while (dataReader.Read())
+            {               
+                categorias.Add(dataReader.GetString(1));
+                CrearRadioButton(dataReader.GetInt32(0), dataReader.GetString(1));
+            }
+            Lblcategorias.Text += " (" + categorias.Count + ")";
+            dataReader.Close();
+
+        }
+
+        
+
+        /// <summary>
+        /// Controlador de los RadioButtons. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,7 +134,6 @@ namespace Tienda
 
 
             RadioButton rb = sender as RadioButton;
-
 
             command = connection.CreateCommand();
             command.CommandText = "select * from Products where CategoryId=" + rb.Tag.ToString();
@@ -157,9 +156,8 @@ namespace Tienda
         /// </summary>
         /// <param name="id">id de la categoria de la base de datos. Se guarda como Tag</param>
         /// <param name="categoria">Nombre de la categoría. Valor de Text</param>
-        private void CrearRadioButtons(int id, string categoria)
-        {
-        
+        private void CrearRadioButton(int id, string categoria)
+        {        
             RadioButton rb = new RadioButton();
             rb.Text = categoria;
             rb.Top = ((rb.Height + 3) * (id - 1));
@@ -193,11 +191,9 @@ namespace Tienda
             }
             catch (Exception ex)
             {
-                MessageBox.Show("ERRORR");         
+                MessageBox.Show("ERROR: " + ex.Message);         
             }
         }
-
-       
 
         /// <summary>
         /// Prepara la sentencia sql.
@@ -206,7 +202,7 @@ namespace Tienda
         /// <remarks>No tiene en cuenta los TextBox en blanco ni actualiza el Id del producto.</remarks>
         private string PrepararSentencia()
         {
-            if (!NormalizarTextBox()) return null;
+            if (!ComprobarTextBoxs()) return null;
             string sentencia = "update Products set ";
             // total de textbox con texto
             int total = 0;
@@ -219,7 +215,9 @@ namespace Tienda
                 {
                     if (tb.Tag.ToString().Equals("ProductName"))
                     {
-                        sentencia += tb.Tag.ToString() + "='" + tb.Text.ToString() + "'";
+                        // Uso comillas dobles porque la base de datos contiene nombres con comillas simples y al
+                        // intentar actualizar daba error.
+                        sentencia += tb.Tag.ToString() + "=\"" + tb.Text.ToString() + "\"";
                         total++;
                     } else
                     {
@@ -230,16 +228,13 @@ namespace Tienda
                 } else
                 {
                     if (tb.Tag.ToString().Equals("ProductName"))
-                    {
-                        sentencia += ", " + tb.Tag.ToString() + "=\"" + tb.Text.ToString() + "\"";
-                        total++;
+                    {                        
+                        sentencia += ", " + tb.Tag.ToString() + "=\"" + tb.Text.ToString() + "\"";                        
                     }
                     else
                     {
-                        sentencia += ", " + tb.Tag.ToString() + "=" + tb.Text.ToString();
-                        total++;
-                    }
-                    
+                        sentencia += ", " + tb.Tag.ToString() + "=" + tb.Text.ToString();                        
+                    }                    
                 }
             }
 
@@ -248,7 +243,13 @@ namespace Tienda
             return sentencia;
         }
 
-        private bool NormalizarTextBox()
+        /// <summary>
+        /// Método que normaliza los inputs.
+        /// </summary>
+        /// <returns>true </returns>
+        /// <remarks>En caso de no poder normalizar el texto por existir un erro en los datos de entrada
+        /// se lo muestra al usuario mediante un mensaje.</remarks>
+        private bool ComprobarTextBoxs()
         {
             
             if (!Regex.Match(TBProcuctId.Text, "^\\d+$").Success)

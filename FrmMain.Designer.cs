@@ -29,6 +29,7 @@ namespace Tienda
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.LBProductId = new System.Windows.Forms.ListBox();
             this.LBProductName = new System.Windows.Forms.ListBox();
             this.LBUnitPrice = new System.Windows.Forms.ListBox();
@@ -329,11 +330,12 @@ namespace Tienda
             this.Controls.Add(this.LBProductName);
             this.Controls.Add(this.LBProductId);
             this.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Consulta de productos";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.PanelInput.ResumeLayout(false);
             this.PanelInput.PerformLayout();

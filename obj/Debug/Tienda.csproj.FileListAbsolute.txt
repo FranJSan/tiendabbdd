@@ -8,3 +8,4 @@ C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.csproj.GenerateResource.cach
 C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.csproj.CoreCompileInputs.cache
 C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.exe
 C:\Users\fran_\source\repos\Tienda\obj\Debug\Tienda.pdb
+C:\Users\fran_\source\repos\Tienda\bin\Debug\Nwind.mdb
