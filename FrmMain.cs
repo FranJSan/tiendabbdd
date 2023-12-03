@@ -244,11 +244,11 @@ namespace Tienda
         }
 
         /// <summary>
-        /// Método que normaliza los inputs.
+        /// Método que comprueba los datos de entrada de los TextBox.
         /// </summary>
-        /// <returns>true </returns>
-        /// <remarks>En caso de no poder normalizar el texto por existir un erro en los datos de entrada
-        /// se lo muestra al usuario mediante un mensaje.</remarks>
+        /// <returns>true si los datos de entrada son válidos,
+        /// false en caso contrario.</returns>
+        /// <remarks>Usa patrones Regex para comprobar la valided de los datos.</remarks>
         private bool ComprobarTextBoxs()
         {
             
@@ -275,6 +275,11 @@ namespace Tienda
             return true;
         }
 
+        /// <summary>
+        /// Método para borrar los datos y la selección de los RadioButtons y ListBoxs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnBorrarConsultas_Click(object sender, EventArgs e)
         {
             LBProductId.Items.Clear();
@@ -288,6 +293,12 @@ namespace Tienda
             }
         }
 
+
+        /// <summary>
+        /// Método para borrar los datos y la selección de los TextBoxs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnBorrarInputs_Click(object sender, EventArgs e)
         {
             TBProcuctId.Text = "";
