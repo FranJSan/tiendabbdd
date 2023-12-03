@@ -51,8 +51,8 @@ namespace Tienda
             this.label1 = new System.Windows.Forms.Label();
             this.BtnBorrarConsultas = new System.Windows.Forms.Button();
             this.BtnBorrarInputs = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel1.SuspendLayout();
+            this.PanelInput = new System.Windows.Forms.Panel();
+            this.PanelInput.SuspendLayout();
             this.SuspendLayout();
             // 
             // LBProductId
@@ -290,24 +290,24 @@ namespace Tienda
             this.BtnBorrarInputs.UseVisualStyleBackColor = true;
             this.BtnBorrarInputs.Click += new System.EventHandler(this.BtnBorrarInputs_Click);
             // 
-            // panel1
+            // PanelInput
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.LblInputPId);
-            this.panel1.Controls.Add(this.BtnBorrarInputs);
-            this.panel1.Controls.Add(this.LblInputPName);
-            this.panel1.Controls.Add(this.LblInputUPrice);
-            this.panel1.Controls.Add(this.LblInputUStock);
-            this.panel1.Controls.Add(this.BtnActualizar);
-            this.panel1.Controls.Add(this.TBUnitStock);
-            this.panel1.Controls.Add(this.TBProcuctId);
-            this.panel1.Controls.Add(this.TBUnitPrice);
-            this.panel1.Controls.Add(this.TBProductName);
-            this.panel1.Location = new System.Drawing.Point(659, -1);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(370, 279);
-            this.panel1.TabIndex = 22;
+            this.PanelInput.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PanelInput.Controls.Add(this.label1);
+            this.PanelInput.Controls.Add(this.LblInputPId);
+            this.PanelInput.Controls.Add(this.BtnBorrarInputs);
+            this.PanelInput.Controls.Add(this.LblInputPName);
+            this.PanelInput.Controls.Add(this.LblInputUPrice);
+            this.PanelInput.Controls.Add(this.LblInputUStock);
+            this.PanelInput.Controls.Add(this.BtnActualizar);
+            this.PanelInput.Controls.Add(this.TBUnitStock);
+            this.PanelInput.Controls.Add(this.TBProcuctId);
+            this.PanelInput.Controls.Add(this.TBUnitPrice);
+            this.PanelInput.Controls.Add(this.TBProductName);
+            this.PanelInput.Location = new System.Drawing.Point(659, -1);
+            this.PanelInput.Name = "PanelInput";
+            this.PanelInput.Size = new System.Drawing.Size(370, 279);
+            this.PanelInput.TabIndex = 22;
             // 
             // FrmMain
             // 
@@ -316,7 +316,7 @@ namespace Tienda
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1028, 277);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.PanelInput);
             this.Controls.Add(this.BtnBorrarConsultas);
             this.Controls.Add(this.Lblcategorias);
             this.Controls.Add(this.PanelRb);
@@ -335,8 +335,8 @@ namespace Tienda
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.PanelInput.ResumeLayout(false);
+            this.PanelInput.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,7 +366,7 @@ namespace Tienda
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BtnBorrarInputs;
         private System.Windows.Forms.Button BtnBorrarConsultas;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel PanelInput;
     }
 }
 

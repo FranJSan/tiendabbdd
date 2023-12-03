@@ -10,6 +10,10 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// 
+/// Borrar lista categorias? -> revisar su uso, pero no es necesaria.
+/// </summary>
 namespace Tienda
 {
     public partial class FrmMain : Form
@@ -162,9 +166,9 @@ namespace Tienda
             // total de textbox con texto
             int total = 0;
 
-            for (int i = 0; i < Controls.OfType<TextBox>().Count(); i++)
+            for (int i = 0; i < PanelInput.Controls.OfType<TextBox>().Count(); i++)
             {
-                TextBox tb = Controls.OfType<TextBox>().ElementAt(i);
+                TextBox tb = PanelInput.Controls.OfType<TextBox>().ElementAt(i);
                 if (tb.Text.Length <= 0 || tb.Tag.ToString().Equals("ProductId")) continue;
                 if (total == 0)
                 {
@@ -201,6 +205,12 @@ namespace Tienda
 
         private bool NormalizarTextBox()
         {
+            
+            if (!Regex.Match(TBProcuctId.Text, "^\\d+$").Success)
+            {
+                MessageBox.Show("Error en el Id.");
+                return false;
+            }
             
             TBUnitPrice.Text = TBUnitPrice.Text.Replace(',', '.');
             
